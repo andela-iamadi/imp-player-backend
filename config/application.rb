@@ -22,5 +22,12 @@ module PlayerBackend
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins 'localhost:3000', '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options]
+      end
+    end
   end
 end
